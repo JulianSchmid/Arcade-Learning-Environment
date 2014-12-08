@@ -27,7 +27,8 @@ LD := g++
 LIBS += -lz 
 RANLIB := ranlib
 INSTALL := install
-AR := ar cru
+#AR := ar cru
+AR := ar rcs
 MKDIR := mkdir -p
 ECHO := printf
 CAT := cat
@@ -97,6 +98,7 @@ endif
 
 EXECUTABLE  := ale$(EXEEXT)
 LIBRARY := libale.so
+SLIBRARY := libale.a
 
 all: tags $(EXECUTABLE) $(LIBRARY)
 
@@ -149,6 +151,9 @@ $(EXECUTABLE):  $(OBJS)
 
 $(LIBRARY): $(OBJS)
 	$(LD) $(LDFLAGS) -shared -o $(LIBRARY) $(OBJS) $(LIBS)
+
+$(SLIBRARY): $(OBJS)      
+	$(AR) $@ $^
 
 distclean: clean
 	$(RM_REC) $(DEPDIRS)
